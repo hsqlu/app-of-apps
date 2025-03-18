@@ -14,4 +14,10 @@ spec:
     path: argo-event/overlays/dev
     repoURL: https://github.com/hsqlu/control-apps
     targetRevision: main
-
+  syncPolicy:
+    automated: 
+      selfHeal: true
+      prune: true
+    syncOptions:
+    - CreateNamespace=true
+    - PruneLast=true
