@@ -9,7 +9,7 @@ spec:
   project: default
   source:
     source:
-    path: argo-event/overlays/dev
+    path: gateway-api/overlays/dev
     repoURL: https://github.com/hsqlu/control-apps
     targetRevision: main
   syncPolicy:
