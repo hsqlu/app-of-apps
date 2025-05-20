@@ -1,0 +1,23 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: gateway-api-crds
+  namespace: argocd
+spec:
+  destination:
+    server: https://kubernetes.default.svc
+  project: default
+  source:
+    source:
+    path: argo-event/overlays/dev
+    repoURL: https://github.com/hsqlu/control-apps
+    targetRevision: main
+  syncPolicy:
+    automated:
+      # Prune resources during auto-syncing (default is false)
+      prune: true 
+      # Sync the app in part when resources are changed only in the target Kubernetes cluster
+      # but not in the git source (default is false).
+      selfHeal: true 
+    syncOptions:
+    - CreateNamespace=true
