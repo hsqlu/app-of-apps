@@ -1,0 +1,39 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: kyverno-helm
+  namespace: argocd
+  labels:
+    app.kubernetes.io/name: kyverno
+    app.kubernetes.io/part-of: security
+  annotations:
+    argocd.argoproj.io/description: "Deploy Kyverno using Helm via ArgoCD."
+spec:
+  project: default
+  source:
+    repoURL: https://github.com/hsqlu/control-apps
+    targetRevision: main # Use a specific Kyverno chart version for stability
+    path: helm-charts/kyverno
+    helm:
+      valueFiles:
+        - helm-values/kyverno-dev-values.yaml
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: kyverno
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true
+    retry:
+      limit: 5
+      backoff:
+        duration: 5s
+        factor: 2
+        maxDuration: 3m
+  info:
+    - name: "Upstream Project"
+      value: "https://kyverno.io/"
+    - name: "Helm Chart"
+      value: "https://artifacthub.io/packages/helm/kyverno/kyverno"
