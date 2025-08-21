@@ -16,7 +16,7 @@ spec:
     path: helm-charts/kyverno
     helm:
       valueFiles:
-        - helm-values/kyverno-values-dev.yaml.yaml
+        - ../../helm-values/kyverno-values-dev.yaml.yaml
   destination:
     server: https://kubernetes.default.svc
     namespace: kyverno
